@@ -35,6 +35,17 @@ export default {
       toggleSideBar,
       isOpenSideBar,
     }
+  },
+  methods: {
+    handleToggle(item) {
+      if (this.selectedPost && item.id === this.selectedPost.id) {
+        this.toggleSideBar({...this.isOpenSideBar,comment : false});
+        this.selectedPost = null
+      } else {
+        this.toggleSideBar({...this.isOpenSideBar,comment : true});
+        this.selectedPost = item;
+      }
+    }
   }
 };
 </script>
@@ -64,13 +75,10 @@ export default {
                 <button 
                   type="button" 
                   class="button is-link"
-                  :class="{'is-light' : isOpenSideBar.comment && selectedPost.id === item.id}"
-                  @click="() => {
-                    toggleSideBar({...isOpenSideBar,comment : true});
-                    this.selectedPost = item
-                  }"
+                  :class="{'is-light' : this.isOpenSideBar.comments && selectedPost && selectedPost.id === item.id}"
+                  @click="handleToggle(item)"
                 >
-                  Open
+                {{ selectedPost && this.isOpenSideBar.comments && selectedPost.id === item.id ? 'close' : 'open' }}
                 </button>
               </td>
             </tr>

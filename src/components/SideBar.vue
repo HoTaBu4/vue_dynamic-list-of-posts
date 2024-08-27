@@ -14,11 +14,6 @@
 			AddPost,
 			PostPreview,
 		},
-		computed: {
-			openedSideBar() {
-				return this.isOpenSideBar.comments || this.isOpenSideBar.createPost;
-			}
-		},
 		setup () {
 			const toggleSideBar = inject('toggleSideBar');
       const isOpenSideBar = inject('isOpenSideBar');
@@ -27,7 +22,14 @@
 				toggleSideBar,
 				isOpenSideBar
 			}
-		}
+		},
+		computed: {
+			openedSideBar() {
+				console.log(this.isOpenSideBar.comments)
+				return this.isOpenSideBar.comments || this.isOpenSideBar.createPost;
+			}
+		},
+		
 	}
 </script>
 
