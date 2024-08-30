@@ -1,34 +1,67 @@
+<script>
+export default {
+  props: {
+    modelValue: {
+      type: String,
+      required: true,
+    },
+    placeHolder: {
+      type: String,
+    },
+    title : {
+      type: String,
+      required: true,
+    }
+  },
+  data () {
+    return {
+      isError: false,
+    }
+  }
+}
+</script>
+
 <template>
-  <div className="field" data-cy="NameField">
-    <label className="label" htmlFor="{`comment-author-name-${name}`}">
-      title
+  <div class="field" data-cy="NameField">
+    <label 
+      class="label" 
+      :htmlFor="`comment-author-name-${title}`"
+    >
+      {{ title }}
     </label>
-    <div className="control has-icons-left has-icons-right">
+    <div class="control has-icons-left has-icons-right">
       <input
         type="text"
-        name="{name}"
-        id="{`comment-author-name-${name}`}"
-        placeholder="{placeholder}"
-        className="input is-danger"
+        :name="title"
+        :id="`comment-author-name-${title}`"
+        class="input"
+        :class="{'is-danger' : isError}"
+        :placeholder="placeHolder"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
       />
-      <span className="icon is-small is-left">
-        <i className="fas fa-user"></i>
+      <span class="icon is-small is-left">
+        <i class="fas fa-user"></i>
       </span>
 
       <span
-        className="icon is-small is-right has-text-danger"
+        class="icon is-small is-right has-text-danger"
         data-cy="ErrorIcon"
+        v-if="isError"
       >
-        <i className="fas fa-exclamation-triangle"></i>
+        <i class="fas fa-exclamation-triangle"></i>
       </span>
     </div>
 
-    <p className="help is-danger" data-cy="ErrorMessage">error text</p>
+    <p 
+      class="help is-danger" 
+      data-cy="ErrorMessage"
+      v-if="this.isError"
+    >
+      error text
+    </p>
   </div>
 </template>
-
-<script>
-</script>
 
 <style>
 </style>

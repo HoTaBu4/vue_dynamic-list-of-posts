@@ -7,3 +7,7 @@ export const getUserPosts = (userId) => {
 export const getPosts = () => {
   return client.get('/posts');
 };
+
+export const setPost = (post) => {
+  return client.post(`/posts`,post);
+}

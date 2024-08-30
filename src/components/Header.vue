@@ -1,14 +1,13 @@
 <script>
   export default {
     props:{
-      updateUser: {
-        type: Function,
-        reqired: true,
-      },
       userData : {
         type: String,
+      },
+      setUserData : {
+        type: Function,
       }
-    }
+    },
   }
 </script>
 
@@ -26,7 +25,7 @@
 
           <a 
             className="button is-light"
-            @click="updateUser(null)"
+            @click="this.setUserData(null)"
           > 
             Logout
           </a>

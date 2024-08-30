@@ -10,6 +10,12 @@
 				selectedComment: null,
 			}
 		},
+		props: {
+			selectedPost : {
+				type: Object,
+				default: null,
+			}
+		},
 		components: {
 			AddPost,
 			PostPreview,
@@ -20,36 +26,30 @@
 			
 			return {
 				toggleSideBar,
-				isOpenSideBar
+				isOpenSideBar,
 			}
 		},
 		computed: {
 			openedSideBar() {
-				console.log(this.isOpenSideBar.comments)
 				return this.isOpenSideBar.comments || this.isOpenSideBar.createPost;
 			}
 		},
-		
 	}
 </script>
 
 <template>
 	<div 
 		class="tile is-parent is-8-desktop Sidebar"
-		:class="{ 'Sidebar--open': openedSideBar }"
+		:class="{ 'Sidebar--open' : openedSideBar }"
 	>
 		<div class="tile is-child box is-success ">
-			<div class="tile is-child box is-success ">
 			<div class="content">
-				<AddPost v-if="isOpenSideBar" />
-				<PostPreview v-if="isOpenSideBar.commets" />
-			</div>
+				<AddPost v-if="isOpenSideBar.createPost" />
+				<PostPreview  v-if="isOpenSideBar.comments"/>
 			</div>
 		</div>
 	</div>
 </template>
-
-
 
 <style>
 </style>

@@ -6,9 +6,11 @@ const instance = axios.create({
   // application/json is a default Content-Type
 });
 
+const USER_ID = 1710;
+
 export const client = {
   async get(url) {
-    const response = await instance.get(url);
+    const response = await instance.get(url + `?userId=${USER_ID}`);
 
     // no need to run `response.json()` data is already prepared
     return response.data;
@@ -16,7 +18,7 @@ export const client = {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async post(url, data) {
-    const response = await instance.post(url, data);
+    const response = await instance.post(url , data);
 
     return response.data;
   },

@@ -1,5 +1,6 @@
 <script>  
-  import { client } from '../utils/fetchClient';
+  import { inject } from 'vue';
+import { client } from '../utils/fetchClient';
   import Loader from './loader/Loader.vue';
   import NeedToRegister from './NeedToRegister.vue';
   
@@ -19,31 +20,28 @@
         isLoading: false
       }
     },
+    setup () {
+      const setUserData = inject('setUserData');
+      return {
+        setUserData,
+      }
+    },
     methods : {
       handleSubmit() {
         this.isLoading = true
         client.get(`/users?email=${this.user.email}`).then(data => {
           if (data.length > 0) {
-            this.formSubmitted(data[0])
+            this.setUserData(data[0])
           } else if (this.mustRegister === false) {
             this.mustRegister = true;
           } else {
             client.post(`/users`,this.user).then(data => {
-              // this.$emit('formSubmitted', data);
-              this.formSubmitted(data)
+              this.setUserData(data);
             });
           }        
-        }).catch(error => {
-          this.isLoading = false
         }).finally(() => this.isLoading = false);
       },
     },
-    props: {
-      formSubmitted: {
-        type: Function,
-        required: true,
-      }
-    }
   }
 </script>
 

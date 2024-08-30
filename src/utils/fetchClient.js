@@ -1,10 +1,4 @@
 const BASE_URL = 'https://mate.academy/students-api';
-
-function wait(delay) {
-    return new Promise(resolve => {
-      setTimeout(resolve, delay);
-    });
-  }
   
   async function request(
     url,
@@ -22,7 +16,6 @@ function wait(delay) {
     }
   
     // for a demo purpose we emulate a delay to see if Loaders work
-    await wait(300);
       const response = await fetch(BASE_URL + url, options);
       return await response.json();
   }

@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
-import App from './App.vue'
 import './style.css'
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import Index from './index.vue';
 
 
-createApp(App).mount('#root')
+createApp(Index).mount('#root')

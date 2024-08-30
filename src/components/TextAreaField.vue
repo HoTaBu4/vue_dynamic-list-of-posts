@@ -1,21 +1,56 @@
+<script>
+export default{
+  props : {
+    modelValue : {
+      type: String,
+    },
+    title : {
+      type: String,
+    },
+    placeHolder : {
+      type :String
+    }
+  },
+  data() {
+    return {
+      isError : false
+    }
+  }
+  
+}
+</script>
+
 <template>
-  <div className="field" data-cy="BodyField">
-  <label className="label" htmlFor="{`comment-${name}`}"> title </label>
-  <div className="control">
+  <div class="field" data-cy="BodyField">
+  <label 
+    class="label" 
+    :htmlFor="`comment-${title}`"
+  > 
+    {{ title }}
+  </label>
+  <div class="control">
     <textarea
-      id="{`comment-${name}`}"
-      name="name"
-      placeholder="{placeholder}"
-      className="textarea is-danger"
+      :id="`comment-${title}`"
+      :name="title"
+      class="textarea"
+      :class="{'is-danger' : isError}"
+      :placeholder="placeHolder"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
     ></textarea>
   </div>
 
-  <p className="help is-danger" data-cy="ErrorMessage">error text</p>
+  <p 
+    class="help is-danger" 
+    data-cy="ErrorMessage"
+    v-if="isError"
+  >
+    error text
+  </p>
 </div>
 </template>
 
-<script>
-</script>
+
 
 <style>
 </style>

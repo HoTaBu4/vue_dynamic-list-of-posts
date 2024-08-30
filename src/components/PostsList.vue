@@ -2,13 +2,13 @@
 <script>
 import { getUserPosts } from './../api/posts.js';
 import { inject } from 'vue';
+import { CLEAR, COMMENTS, CREATEPOST } from './types/types.js';
 
 export default {
   data() {
     return {
       posts: [],
       isLoading: false,
-      selectedPost: null,
     };
   },
   props: {
@@ -30,22 +30,29 @@ export default {
   setup() {
     const toggleSideBar = inject('toggleSideBar');
     const isOpenSideBar = inject('isOpenSideBar');
+    const setSelectedPost = inject('setSelectedPost');
+    const selectedPost = inject('selectedPost');
     
     return {
       toggleSideBar,
       isOpenSideBar,
+      setSelectedPost,
+      selectedPost,
     }
   },
   methods: {
     handleToggle(item) {
       if (this.selectedPost && item.id === this.selectedPost.id) {
-        this.toggleSideBar({...this.isOpenSideBar,comment : false});
-        this.selectedPost = null
+        this.toggleSideBar(CLEAR);
+        this.setSelectedPost(null)
       } else {
-        this.toggleSideBar({...this.isOpenSideBar,comment : true});
-        this.selectedPost = item;
+        this.toggleSideBar(COMMENTS);
+        this.setSelectedPost(item);
       }
-    }
+    },
+    handleClick() {
+      this.toggleSideBar(CREATEPOST);
+    },
   }
 };
 </script>
@@ -56,7 +63,14 @@ export default {
       <div class="block">
         <div class="block is-flex is-justify-content-space-between">
           <p class="title">Posts</p>
-          <button type="button" class="button is-link">Add New Post</button>
+          <button 
+            type="button" 
+            class="button is-link"
+            :class="{'is-light': this.isOpenSideBar.createPost}"
+            @click="handleClick"
+          >
+            Add New Post
+          </button>
         </div>
   
         <table class="table is-fullwidth is-striped is-hoverable is-narrow">

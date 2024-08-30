@@ -4,6 +4,7 @@
   import PostsList from './components/PostsList.vue';
   import SideBar from './components/SideBar.vue';
   import Provider from './components/Provider.vue';
+  import { inject } from 'vue';
 
   export default {
     components : {
@@ -11,24 +12,16 @@
       Header,
       PostsList,
       SideBar,
-      Provider,
     },
-    
-    data() {
+    setup() {
+      const isOpenSideBar = inject('isOpenSideBar')
+      const userData = inject('userData');
+      const setUserData = inject('setUserData');
+
       return {
-        userData: null,
-        isOpenSideBar: {
-          createPost: false,
-          comments:false,
-        },
-      }
-    },
-    methods: {
-      updateUser(state) {
-        this.userData = state
-      },
-      toggleSideBar(state) {
-        this.isOpenSideBar = state
+        isOpenSideBar,
+        userData,
+        setUserData,
       }
     },
   }
@@ -38,13 +31,11 @@
 <template>
   <Login  
     v-if="!userData"
-    :formSubmitted="updateUser"
   />
-  
   <Header 
     v-if="userData"  
     :userData
-    :updateUser
+    :setUserData
   />
   <main 
     v-if="userData"
@@ -52,16 +43,15 @@
   >
     <div class="container">
       <div class="tile is-ancestor">
-        <Provider>
-          <PostsList 
-            :userData
-          />
-          <SideBar :isOpenSideBar/>
-        </Provider>
+        <PostsList 
+          :userData
+        />
+        <SideBar 
+          :isOpenSideBar
+        />
       </div>
     </div>
-  </main>
-  
+  </main> 
 </template>
 
 <style scoped>
